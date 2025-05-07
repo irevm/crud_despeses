@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Firebase CRUD - Despeses</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <main>
+    <h1>Despeses</h1>
+
+    <form id="despeses-form">
+      <label for="despesa-concepte">Concepte</label>
+      <input type="text" id="despesa-concepte" placeholder="Concepte de la despesa">
+
+      <label for="despesa-quantia">Import</label>
+      <input type="text" id="despesa-quantia">
+
+      <label for="despesa-pagat-per">Pagat per</label>
+
+      <select id="despesa-pagat-per">
+        <option value="joan">Joan</option>
+        <option value="irene">Irene</option>
+        <option value="maria">Maria</option>
+      </select>
+      
+      <button id="btn-despesa-save">Guardar despesa</button>
+
+    </form>
+
+    <div id="despeses-container"></div>
+
+  </main>
+  
+  <script type="module" src="index.js"></script>
+  
+</body>
+</html>
