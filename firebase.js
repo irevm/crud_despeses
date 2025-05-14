@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-import { getFirestore, addDoc, collection, getDocs, onSnapshot     
+import { getFirestore, addDoc, collection, getDocs, onSnapshot, doc, deleteDoc     
 } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js"
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -34,3 +34,13 @@ export const getDespeses = () =>
 
 export const onGetDespeses = (callback) =>
   onSnapshot(collection(db, "despeses"), callback);
+
+export const deleteDespesa = async (id) => {
+  deleteDoc(doc(db, "despeses", id));
+  // try {
+  //   await delete(doc(db, "despeses", id));
+  //   console.log("Despesa eliminada amb ID: ", id);
+  // } catch (error){
+  //   console.error("Error eliminant despesa; ", error);
+  // }
+}

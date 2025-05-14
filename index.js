@@ -1,4 +1,4 @@
-import { saveDespesa, getDespeses, onGetDespeses } from './firebase.js'
+import { saveDespesa, getDespeses, onGetDespeses, deleteDespesa } from './firebase.js'
 
 const despeses = [];
 const despesesForm = document.getElementById("despeses-form");
@@ -14,14 +14,11 @@ function addEventListenerToSaveDespesa () {
 
         const despesa = { concepte, quantia, pagatPer};
 
-        console.log(despesa);
+        // console.log(despesa);
 
         saveDespesa(despesa)
           .then( (despesaId) =>{
-            console.log(despesaId);
-            despesa.id = despesaId;
-            despeses.push(despesa);
-            console.log(despesa);
+            console.log("S'ha creat la despesa amb ID:", despesaId);
           });
 
           despesesForm.reset();
@@ -56,6 +53,7 @@ async function readAndRenderDespeses () {
 function readAndRenderDespesesV2 () {
   onGetDespeses((querySnapshot) => {
     let html = "";
+    despeses.length = 0;
 
     querySnapshot.forEach(doc => {
       const despesa = doc.data();
@@ -76,7 +74,34 @@ function readAndRenderDespesesV2 () {
 
     despesesContainer.innerHTML = html;
 
+    addEventsToDeleteDespeses();
+    console.log(despeses);
+
   });
+}
+
+function addEventsToDeleteDespeses () {
+  const deleteButtons = document.querySelectorAll(".delete-despesa-btn");
+
+  deleteButtons.forEach((button) => {
+    button.addEventListener("click", ()=>{
+      const despesaId = button.getAttribute("data-id");
+      deleteDespesa(despesaId)
+        .then(()=>{
+          deleteDespesaFromArray(despesaId);
+        })            
+
+    });
+  });  
+
+}
+
+function deleteDespesaFromArray (despesaId) {
+  const despesaIndex = despeses.findIndex((despesa) => despesa.id === despesaId);
+  if (despesaIndex !== -1){
+    despeses.splice(despesaIndex, 1);
+  }
+  console.log(despeses);
 }
 
 
