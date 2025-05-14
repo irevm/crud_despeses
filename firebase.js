@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-import { getFirestore, addDoc, collection     
+import { getFirestore, addDoc, collection, getDocs, onSnapshot     
 } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js"
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -22,8 +22,15 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-export const saveDespesa = (despesa) => {
-    console.log(despesa);
-    addDoc(collection(db, "despeses"), despesa);
-    
+export const saveDespesa = async (despesa) => {
+  console.log(despesa);
+  const docRef = await addDoc(collection(db, "despeses"), despesa);
+
+  return docRef.id;   
 }
+
+export const getDespeses = () => 
+  getDocs(collection(db, "despeses"));
+
+export const onGetDespeses = (callback) =>
+  onSnapshot(collection(db, "despeses"), callback);
